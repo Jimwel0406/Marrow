@@ -55,11 +55,7 @@ export function Hero() {
         </div>
 
         {/* Hero footer rail */}
-        <div className="shell flex items-end justify-between pb-8 lg:pb-10">
-          <p className="text-[11px] font-semibold tracking-[0.24em] text-ivory/70 uppercase">
-            01 &mdash; 04
-          </p>
-
+        <div className="shell flex items-end justify-end pb-8 lg:pb-10">
           <div className="hidden flex-col items-center gap-3 lg:flex">
             <span
               aria-hidden="true"

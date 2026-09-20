@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Photo } from "@/components/media/Photo";
-import { DROP_FRAMES } from "@/lib/content";
 
 export function WinterDrop() {
   return (
@@ -52,37 +51,6 @@ export function WinterDrop() {
                 strokeWidth={1.75}
               />
             </Link>
-          </div>
-
-          {/* Drop navigator */}
-          <div className="hidden shrink-0 flex-col items-end gap-5 lg:flex">
-            <span
-              aria-hidden="true"
-              className="flex items-center gap-2 text-ivory/80"
-            >
-              <span className="block h-px w-12 bg-ivory/45" />
-              <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
-            </span>
-
-            <ol className="flex flex-col items-end gap-3" aria-label="Drop pieces">
-              {DROP_FRAMES.map((frame, index) => (
-                <li key={frame} className="flex items-center gap-3">
-                  <span
-                    className={`text-[11px] font-semibold tracking-[0.24em] tabular-nums ${
-                      index === 0 ? "text-ivory" : "text-ivory/55"
-                    }`}
-                  >
-                    {frame}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className={`block h-px ${
-                      index === 0 ? "w-8 bg-ivory" : "w-4 bg-ivory/40"
-                    }`}
-                  />
-                </li>
-              ))}
-            </ol>
           </div>
         </div>
       </div>
