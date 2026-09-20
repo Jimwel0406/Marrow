@@ -16,7 +16,20 @@ const AI_AGENTS = [
   "Meta-ExternalAgent",
   "Bytespider",
   "ImagesiftBot",
+  "DataForSeoBot",
   "Diffbot",
+  "ExaBot",
+  "FacebookBot",
+  "GoogleOther",
+  "Google-InspectionTool",
+  "Mangools",
+  "Millie",
+  "Neeva",
+  "OmgiliBot",
+  "ResearchGPT",
+  "Twitterbot",
+  "Vizbot",
+  "Yahoo! Slurp",
 ];
 
 export default function robots(): MetadataRoute.Robots {

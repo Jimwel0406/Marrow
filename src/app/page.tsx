@@ -12,7 +12,7 @@ const season = `Fall/Winter ${new Date().getFullYear()}`;
 
 export const metadata: Metadata = {
   title: "Marrow | Functional Streetwear Built for What's Next",
-  description: `Shop the Marrow ${season} collection: hooded utility jackets, heavyweight crewnecks, wide-leg cargo pants and caps. Limited runs, made in Manila, free returns.`,
+  description: `Shop the Marrow ${season} collection: hooded utility jackets, heavyweight crewnecks, wide-leg cargo pants and caps. Limited runs, made in Manila.`,
   alternates: { canonical: "/" },
 };
 

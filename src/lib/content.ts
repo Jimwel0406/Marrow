@@ -4,7 +4,7 @@ export const SITE = {
   tagline: "Clothes for a bigger tomorrow",
   founded: "EST. 2018",
   location: "MANILA, PH",
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow.example").replace(/\/$/, ""),
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://marrow-silk.vercel.app").replace(/\/$/, ""),
   description:
     "Marrow is a Manila streetwear label making functional outerwear, heavyweight jersey and wide-leg bottoms in limited seasonal runs.",
 } as const;

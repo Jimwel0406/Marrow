@@ -8,11 +8,13 @@ const isProd = process.env.NODE_ENV === "production";
 // optimisation on an otherwise fully static page.
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  // va.vercel-scripts.com serves the Speed Insights debug build in development;
+  // in production the same-origin /_vercel/speed-insights/script.js is used.
+  `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com${isProd ? "" : " 'unsafe-eval'"}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  `connect-src 'self' https://va.vercel-scripts.com${isProd ? "" : " ws: wss: http://localhost:*"}`,
   "manifest-src 'self'",
   "object-src 'none'",
   "base-uri 'self'",

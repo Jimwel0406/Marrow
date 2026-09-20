@@ -69,8 +69,13 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  useEffect(() => {
+useEffect(() => {
     if (!open) return;
+
+    /* Move focus into the panel so screen-reader and keyboard users land on
+       the first link instead of staying on the toggle. */
+    const firstLink = panelRef.current?.querySelector<HTMLAnchorElement>("a");
+    firstLink?.focus({ preventScroll: true });
 
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -93,7 +98,7 @@ export function SiteHeader() {
     };
   }, [open]);
 
-  /* Off-screen but still in the DOM â€” take it out of the tab order too. */
+  /* Off-screen but still in the DOM — take it out of the tab order too. */
   const offscreen = !pinned && !tracking;
 
   return (
@@ -118,7 +123,7 @@ export function SiteHeader() {
         <Link
           href="/"
           className="text-ivory transition-opacity duration-300 hover:opacity-80"
-          aria-label="Marrow â€” home"
+          aria-label="Marrow — home"
         >
           <BrandLockup height={60} priority />
         </Link>

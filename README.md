@@ -4,7 +4,7 @@
 
 A single-page website for a fictional Manila streetwear label, built as a personal front-end design study.
 
-**Live: _deployed on Vercel — URL pending_**
+**Live: [marrow-silk.vercel.app](https://marrow-silk.vercel.app/)**
 
 ---
 
@@ -64,7 +64,7 @@ npm run lint    # eslint
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | `https://marrow.example` | Absolute base URL used for the canonical tag, Open Graph, `sitemap.xml`, `robots.txt` and JSON-LD `@id` values. Set this to override the deployed origin (e.g. a custom domain). |
+| `NEXT_PUBLIC_SITE_URL` | `https://marrow-silk.vercel.app` | Absolute base URL used for the canonical tag, Open Graph, `sitemap.xml`, `robots.txt` and JSON-LD `@id` values. Set this to override the deployed origin (e.g. a custom domain). |
 
 There are no secrets, APIs, databases or server routes — the site is entirely static.
 

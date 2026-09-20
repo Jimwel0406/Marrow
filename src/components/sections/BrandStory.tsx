@@ -12,7 +12,7 @@ export function BrandStory() {
           <Photo
             shot="story"
             sizes="(min-width: 1024px) 50vw, 100vw"
-            src="/images/shop-story.png"
+            src="/images/shop-story.jpg"
             alt="A model in a black jacket with the Marrow back graphic, leaning against a railing in front of a concrete building"
             className="absolute inset-0 h-full w-full"
           />

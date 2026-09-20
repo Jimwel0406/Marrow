@@ -4,13 +4,13 @@
 
 ## Sections
 
-- [Home](https://marrow.example/): The Fall/Winter 2025 collection, the City Moves campaign, and shop-by-category navigation.
-- [Shop](https://marrow.example/shop): The full current range across outerwear, bottoms, tops, footwear and accessories.
-- [Collections](https://marrow.example/collections): Seasonal collections, including the Winter Drop.
-- [About](https://marrow.example/about): How Marrow started and what the label stands for.
-- [Journal](https://marrow.example/journal): Campaign stories and editorial from the streets.
+- [Home](https://marrow-silk.vercel.app/): The Fall/Winter 2026 collection, the City Moves campaign, and shop-by-category navigation.
+- [Shop](https://marrow-silk.vercel.app/shop): The full current range across outerwear, bottoms, tops, footwear and accessories.
+- [Collections](https://marrow-silk.vercel.app/collections): Seasonal collections, including the Winter Drop.
+- [About](https://marrow-silk.vercel.app/about): How Marrow started and what the label stands for.
+- [Journal](https://marrow-silk.vercel.app/journal): Campaign stories and editorial from the streets.
 
-## Key products — Fall/Winter 2025
+## Key products — Fall/Winter 2026
 
 - **Utility Hooded Jacket** — $128. Three-layer matte ripstop with taped seams. SKU MAR-OW-01.
 - **Essential Crewneck** — $68. 480 gsm brushed loopback cotton. SKU MAR-TO-07.
