@@ -106,6 +106,3 @@ export const FEATURED_PRODUCTS: Product[] = [
     src: "/images/products/logo-cap.jpg",
   },
 ];
-
-export const CAMPAIGN_FRAMES = ["01", "02", "03", "04"] as const;
-export const DROP_FRAMES = ["01", "02", "03"] as const;

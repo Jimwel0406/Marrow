@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Photo } from "@/components/media/Photo";
-import { CAMPAIGN_FRAMES } from "@/lib/content";
 
 export function Campaign() {
   return (
@@ -47,31 +46,6 @@ export function Campaign() {
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
             </Link>
           </div>
-
-          {/* Frame indicator */}
-          <ol
-            className="hidden shrink-0 flex-col items-end gap-3 lg:flex"
-            aria-label="Campaign frames"
-          >
-            {CAMPAIGN_FRAMES.map((frame, index) => (
-              <li key={frame} className="flex items-center gap-3">
-                <span
-                  className={`text-[11px] font-semibold tracking-[0.24em] tabular-nums ${
-                    index === 0 ? "text-ivory" : "text-ivory/60"
-                  }`}
-                >
-                  {frame}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className={`block h-px transition-all duration-300 ${
-                    index === 0 ? "w-10 bg-ivory" : "w-5 bg-ivory/45"
-                  }`}
-                />
-              </li>
-            ))}
-            <li aria-hidden="true" className="mt-3 block h-16 w-px bg-ivory/40" />
-          </ol>
         </div>
       </div>
     </section>
