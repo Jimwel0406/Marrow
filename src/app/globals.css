@@ -1,0 +1,294 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   MARROW — design tokens
+   Palette is deliberately desaturated: cinematic ink, warm ivory,
+   studio stone and a muted steel blue lifted from the city photography.
+------------------------------------------------------------------ */
+
+@theme inline {
+  --font-sans: var(--font-archivo), "Archivo", "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+}
+
+@theme {
+  /* surfaces */
+  --color-ink: #0a0a0b;
+  --color-ink-2: #121214;
+  --color-ink-3: #1c1d20;
+  --color-ivory: #f4f1ec;
+  --color-ivory-2: #ece8e1;
+  --color-sand: #e0dad0;
+  --color-stone: #d6d0c6;
+
+  /* text */
+  --color-charcoal: #232326;
+  --color-muted: #5d5b55;
+  --color-muted-2: #6f6c65;
+
+  /* accents pulled from the campaign photography */
+  --color-steel: #5f6e7d;
+  --color-steel-2: #8d9aa6;
+  --color-dusk: #b8875f;
+
+  /* type scale */
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-micro: 0.8125rem;
+  --text-micro--line-height: 1.5;
+  --text-display-sm: clamp(1.75rem, 2.6vw, 2.25rem);
+  --text-display-sm--line-height: 1.05;
+  --text-display-md: clamp(1.875rem, 3.05vw, 2.75rem);
+  --text-display-md--line-height: 1.02;
+  --text-display-lg: clamp(2.75rem, 6.2vw, 5.25rem);
+  --text-display-lg--line-height: 0.98;
+
+  /* tracking */
+  --tracking-eyebrow: 0.28em;
+  --tracking-display: 0.14em;
+  --tracking-display-wide: 0.2em;
+  --tracking-nav: 0.08em;
+
+  /* rhythm */
+  --spacing-section: clamp(4.5rem, 7vw, 7.5rem);
+  --spacing-gutter: 1.25rem;
+
+  --ease-editorial: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* -- page shell: one consistent horizontal grid for every section -- */
+  .shell {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 106rem; /* 1696px */
+    padding-inline: var(--spacing-gutter);
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.75rem;
+    }
+  }
+
+  /* -- eyebrow: quiet uppercase label used above every headline -- */
+  .eyebrow {
+    font-size: var(--text-eyebrow);
+    line-height: 1.2;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+  }
+
+  /* -- display: wide-tracked uppercase editorial headline -- */
+  .display {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-display);
+    text-wrap: balance;
+  }
+
+  /* -- editorial link with a rule that extends on hover -- */
+  .rule-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-micro);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.35rem;
+    transition: gap 300ms var(--ease-editorial);
+  }
+
+  .rule-link:hover,
+  .rule-link:focus-visible {
+    gap: 0.9rem;
+  }
+
+  /* -- buttons: squared, editorial, never pill-shaped -- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    text-align: center;
+    transition:
+      background-color 300ms var(--ease-editorial),
+      color 300ms var(--ease-editorial),
+      border-color 300ms var(--ease-editorial);
+  }
+
+  .btn-solid {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    border: 1px solid var(--color-ivory);
+  }
+
+  .btn-solid:hover,
+  .btn-solid:focus-visible {
+    background-color: transparent;
+    color: var(--color-ivory);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: var(--color-ivory);
+    border: 1px solid color-mix(in srgb, var(--color-ivory) 55%, transparent);
+  }
+
+  .btn-outline:hover,
+  .btn-outline:focus-visible {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    border-color: var(--color-ivory);
+  }
+
+  .btn-ink {
+    background-color: var(--color-ink);
+    color: var(--color-ivory);
+    border: 1px solid var(--color-ink);
+  }
+
+  .btn-ink:hover,
+  .btn-ink:focus-visible {
+    background-color: transparent;
+    color: var(--color-ink);
+  }
+
+  /* -- cinematic scrim: keeps white type legible without flattening the image -- */
+  .scrim-left {
+    background: linear-gradient(
+      100deg,
+      rgba(8, 9, 11, 0.9) 0%,
+      rgba(8, 9, 11, 0.72) 32%,
+      rgba(8, 9, 11, 0.28) 58%,
+      rgba(8, 9, 11, 0.05) 100%
+    );
+  }
+
+  .scrim-bottom {
+    background: linear-gradient(
+      to top,
+      rgba(8, 9, 11, 0.85) 0%,
+      rgba(8, 9, 11, 0.45) 34%,
+      rgba(8, 9, 11, 0) 70%
+    );
+  }
+
+  .scrim-flat {
+    background: linear-gradient(
+      to right,
+      rgba(8, 9, 11, 0.86) 0%,
+      rgba(8, 9, 11, 0.62) 40%,
+      rgba(8, 9, 11, 0.16) 100%
+    );
+  }
+
+  /* -- holds type legible over an already-dark left edge while falling away
+        fast enough that a bright horizon in the centre survives intact -- */
+  .scrim-left-soft {
+    background: linear-gradient(
+      to right,
+      rgba(8, 9, 11, 0.72) 0%,
+      rgba(8, 9, 11, 0.56) 18%,
+      rgba(8, 9, 11, 0.34) 36%,
+      rgba(8, 9, 11, 0.1) 54%,
+      rgba(8, 9, 11, 0) 72%
+    );
+  }
+
+  /* -- subtle all-over veil for short mobile sections whose copy sits low -- */
+  .scrim-movement {
+    background: linear-gradient(
+      to bottom,
+      rgba(8, 9, 11, 0.3) 0%,
+      rgba(8, 9, 11, 0.42) 55%,
+      rgba(8, 9, 11, 0.58) 100%
+    );
+  }
+
+  /* -- slow photographic push-in on hover; never on the whole card -- */
+  .photo-zoom > * {
+    transition: transform 900ms var(--ease-editorial);
+  }
+
+  .group:hover .photo-zoom > *,
+  .group:focus-within .photo-zoom > * {
+    transform: scale(1.035);
+  }
+
+  /* -- film grain: one shared texture so every image reads as one campaign -- */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  /* -- hide the native scrollbar on mobile carousels; a custom
+        always-visible track/thumb is rendered instead (native scrollbar
+        styling is ignored by iOS Safari) -- */
+  .carousel-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .carousel-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}

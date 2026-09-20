@@ -1,0 +1,31 @@
+# Marrow
+
+> Marrow is a Manila streetwear label (est. 2018) that makes functional outerwear, heavyweight jersey and wide-leg bottoms in limited seasonal runs.
+
+## Sections
+
+- [Home](https://marrow.example/): The Fall/Winter 2025 collection, the City Moves campaign, and shop-by-category navigation.
+- [Shop](https://marrow.example/shop): The full current range across outerwear, bottoms, tops, footwear and accessories.
+- [Collections](https://marrow.example/collections): Seasonal collections, including the Winter Drop.
+- [About](https://marrow.example/about): How Marrow started and what the label stands for.
+- [Journal](https://marrow.example/journal): Campaign stories and editorial from the streets.
+
+## Key products — Fall/Winter 2025
+
+- **Utility Hooded Jacket** — $128. Three-layer matte ripstop with taped seams. SKU MAR-OW-01.
+- **Essential Crewneck** — $68. 480 gsm brushed loopback cotton. SKU MAR-TO-07.
+- **Wide Leg Cargo Pants** — $98. Dry-touch cotton twill with six pockets. SKU MAR-BT-04.
+- **Logo Cap** — $32. Washed cotton twill with an embroidered mark. SKU MAR-AC-02.
+
+## Frequently asked questions
+
+- **What does Marrow make?** Functional outerwear, heavyweight jersey tops and wide-leg bottoms, released in limited seasonal runs rather than continuous restocks.
+- **Where is Marrow based?** Manila, Philippines. The label was founded there in 2018.
+- **How often does Marrow release new pieces?** Twice a year for the main seasons, plus limited drops such as the Winter Drop.
+- **What are the prices?** Current pieces range from $32 for accessories to $128 for outerwear.
+- **How do I return an item?** Returns are accepted within 30 days of delivery on unworn pieces with tags attached.
+
+## Contact
+
+- Email: hello@marrow.example
+- Location: Manila, Philippines
