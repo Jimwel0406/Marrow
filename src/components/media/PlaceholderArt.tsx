@@ -273,6 +273,8 @@ export type Shot =
   | "campaign"
   | "story"
   | "drop"
+  | "error-hero"
+  | "error-card"
   | "skyline-sit"
   | "tower"
   | "hooded-jacket"
@@ -511,6 +513,71 @@ export const SHOTS: Record<Shot, Art> = {
         </g>
 
         <rect width="100%" height="100%" fill={`url(#${id}-vig)`} />
+      </>
+    ),
+  },
+
+  /* 404 hero: lone figure under a concrete overhang, subject held right,
+     the left third left dark and quiet so white type can sit over it */
+  "error-hero": {
+    viewBox: "0 0 1400 800",
+    tone: "overcast",
+    render: (id) => (
+      <>
+        <Base id={id} tone="overcast" />
+
+        {/* skyline kept right of centre; the left stays empty */}
+        <Skyline id={id} tone="overcast" y={470} from={820} to={1420} seed={17} opacity={0.26} min={60} max={200} width={58} />
+
+        {/* deep shadow pouring off the slab into the upper-left corner */}
+        <path d="M0 0 L960 0 L430 200 L0 258 Z" fill="#08090c" opacity="0.94" />
+        <path d="M0 258 L430 200 L470 222 L0 284 Z" fill="#2a3038" opacity="0.85" />
+        <path d="M960 0 L1400 0 L1400 96 L1000 74 Z" fill="#13171c" opacity="0.9" />
+        <path d="M430 200 L1000 74 L1004 92 L434 218 Z" fill="#363e48" opacity="0.4" />
+
+        {/* support columns deep in the frame */}
+        <rect x="1130" y="120" width="26" height="340" fill="#151a20" opacity="0.8" />
+        <rect x="1290" y="96" width="26" height="364" fill="#10141a" opacity="0.75" />
+
+        {/* ground plane, lighter than the figure so the silhouette reads */}
+        <defs>
+          <linearGradient id={`${id}-ground`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#3d444d" />
+            <stop offset="55%" stopColor="#1e2329" />
+            <stop offset="100%" stopColor="#0a0d10" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="466" width="1400" height="334" fill={`url(#${id}-ground)`} />
+        <rect x="0" y="466" width="1400" height="2.5" fill="#8b97a3" opacity="0.26" />
+
+        <Figure x={880} y={660} h={396} tone="overcast" pack />
+        <Figure x={1130} y={628} h={248} tone="overcast" opacity={0.5} flip />
+
+        <rect width="100%" height="100%" fill={`url(#${id}-vig)`} />
+        <rect x="0" y="450" width="1400" height="350" fill={`url(#${id}-foot)`} opacity="0.62" />
+      </>
+    ),
+  },
+
+  /* 404 recovery card: figure from behind against a raw concrete facade,
+     portrait crop so it reads as a square-ish editorial tile */
+  "error-card": {
+    viewBox: "0 0 700 860",
+    tone: "overcast",
+    render: (id) => (
+      <>
+        <Base id={id} tone="overcast" />
+        <rect x="0" y="0" width="700" height="860" fill="#4c545c" opacity="0.8" />
+        <g stroke="#3a414a" strokeWidth="2" opacity="0.55">
+          <path d="M140 0 L140 860 M360 0 L360 860 M560 0 L560 860" />
+          <path d="M0 220 L700 220 M0 480 L700 480 M0 720 L700 720" />
+        </g>
+        <rect x="0" y="0" width="700" height="860" fill="#20252b" opacity="0.4" />
+
+        <Figure x={340} y={760} h={640} tone="overcast" flip />
+
+        <rect width="100%" height="100%" fill={`url(#${id}-vig)`} />
+        <rect x="0" y="540" width="700" height="320" fill={`url(#${id}-foot)`} opacity="0.6" />
       </>
     ),
   },

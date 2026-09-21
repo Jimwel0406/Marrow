@@ -13,6 +13,8 @@ type PhotoProps = {
   priority?: boolean;
   /** film grain, on by default so every frame reads as one campaign */
   grain?: boolean;
+  /** JPEG/AVIF encode quality for the served <img> */
+  quality?: number;
   /** extra classes for the <img> itself — e.g. a responsive object-position
    *  so a tall mobile crop still lands on the subject */
   imgClassName?: string;
@@ -26,6 +28,7 @@ export function Photo({
   sizes = "100vw",
   priority = false,
   grain = true,
+  quality = 75,
   imgClassName = "",
 }: PhotoProps) {
   const art = SHOTS[shot];
@@ -39,6 +42,7 @@ export function Photo({
           fill
           sizes={sizes}
           priority={priority}
+          quality={quality}
           className={`object-cover ${imgClassName}`}
         />
       ) : (
