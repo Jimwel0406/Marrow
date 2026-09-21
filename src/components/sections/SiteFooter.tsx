@@ -5,7 +5,14 @@ import {
   TikTokIcon,
   YouTubeIcon,
 } from "@/components/icons/SocialIcons";
-import { NAV_LINKS, SITE } from "@/lib/content";
+import { SITE } from "@/lib/content";
+
+const FOOTER_LINKS = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Shipping & Returns", href: "/shipping" },
+  { label: "Contact", href: "/contact" },
+] as const;
 
 const SOCIALS = [
   { label: "Marrow on Instagram", href: "https://instagram.com", Icon: InstagramIcon },
@@ -27,7 +34,7 @@ export function SiteFooter() {
 
         <nav aria-label="Footer">
           <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:flex sm:gap-x-8">
-            {NAV_LINKS.map((link) => (
+            {FOOTER_LINKS.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
