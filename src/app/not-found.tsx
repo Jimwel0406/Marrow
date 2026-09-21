@@ -89,7 +89,7 @@ export default function NotFound() {
         className="bg-ivory text-charcoal"
       >
         <div className="shell py-12 lg:py-16">
-          <div className="grid grid-cols-1 gap-x-16 gap-y-16 lg:grid-cols-12">
+          <div className="grid grid-cols-1 gap-x-16 gap-y-10 lg:grid-cols-12">
             {/* Left — editorial typography */}
             <div className="lg:col-span-5">
               <p className="eyebrow text-muted">Quick Links</p>
@@ -115,12 +115,12 @@ export default function NotFound() {
               aria-label="Quick navigation"
               className="self-center lg:col-span-4"
             >
-              <ul>
+              <ul className="space-y-5">
                 {QUICK_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="group flex h-[44px] items-center justify-between border-b border-stone/90 text-[11px] font-semibold tracking-[0.18em] text-charcoal uppercase transition-colors duration-300 hover:border-muted hover:text-ink"
+                      className="group flex h-[44px] items-center justify-between border-b border-stone/90 pb-[10px] text-[11.75px] font-semibold tracking-[0.18em] text-charcoal uppercase transition-colors duration-300 hover:border-muted hover:text-ink"
                     >
                       {link.label}
                       <ArrowRight
