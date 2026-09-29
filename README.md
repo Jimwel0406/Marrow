@@ -1,5 +1,3 @@
-<img src="public/images/campaign.jpg" alt="Marrow — two models in dark streetwear leaning on a waterfront railing at dusk, city skyline behind" width="100%" />
-
 # Marrow
 
 A single-page website for a fictional Manila streetwear label, built as a personal front-end design study.
