@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/sections/SiteFooter";
+import { Reveal } from "@/components/motion/Reveal";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { SITE } from "@/lib/content";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -89,6 +92,10 @@ export default function RootLayout({
         </a>
 
         <SiteHeader />
+
+        <SmoothScroll />
+
+        <Reveal />
 
         <main id="main">{children}</main>
 

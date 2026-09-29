@@ -117,7 +117,7 @@ useEffect(() => {
     >
       <div
         ref={barRef}
-        className="shell flex h-[84px] items-center justify-between gap-6 lg:h-[116px]"
+        className="shell flex h-[64px] items-center justify-between gap-6 lg:h-[88px]"
       >
         {/* Brand */}
         <Link
@@ -125,7 +125,7 @@ useEffect(() => {
           className="text-ivory transition-opacity duration-300 hover:opacity-80"
           aria-label="Marrow — home"
         >
-          <BrandLockup height={60} priority />
+          <BrandLockup height={48} priority />
         </Link>
 
         {/* Desktop navigation */}

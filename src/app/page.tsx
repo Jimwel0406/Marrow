@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { FeaturedProducts } from "@/components/sections/FeaturedProducts";
-import { Campaign } from "@/components/sections/Campaign";
 import { ShopByCategory } from "@/components/sections/ShopByCategory";
 import { BrandStory } from "@/components/sections/BrandStory";
-import { WinterDrop } from "@/components/sections/WinterDrop";
 import { Newsletter } from "@/components/sections/Newsletter";
 import { FEATURED_PRODUCTS, SITE } from "@/lib/content";
 
@@ -51,17 +49,11 @@ export default function HomePage() {
       {/* Featured products — The Essentials */}
       <FeaturedProducts />
 
-      {/* Campaign — City Moves */}
-      <Campaign />
-
       {/* Shop by category */}
       <ShopByCategory />
 
-      {/* Brand story — More Than Just Clothes */}
+      {/* Brand story — the founding line on the photograph */}
       <BrandStory />
-
-      {/* Limited drop — The Winter Drop */}
-      <WinterDrop />
 
       {/* Newsletter — Be Part of the Movement */}
       <Newsletter />

@@ -1,50 +1,58 @@
-import { Photo } from "@/components/media/Photo";
+import type { CSSProperties } from "react";
 import { NewsletterForm } from "./NewsletterForm";
 
 export function Newsletter() {
   return (
     <section
       aria-labelledby="newsletter-heading"
-      className="relative isolate overflow-hidden bg-ink text-ivory"
+      className="relative isolate overflow-hidden bg-dusk text-ink"
     >
-      {/* Newsletter photograph: Marrow hoodie against the city at dusk */}
-      <div className="absolute inset-0">
-        <Photo
-          shot="skyline-sit"
-          src="/images/join-the-journey.jpg"
-          sizes="100vw"
-          alt="A person in a Marrow hoodie sitting on a rooftop ledge, back to camera, looking out over a city skyline at dusk"
-          className="h-full w-full"
-          imgClassName="object-[70%_50%] lg:object-center"
-        />
-      </div>
-
-      {/* Subtle dark veil so the copy stays legible on small screens */}
+      {/* Lit-surface wash — warm light top-left, shadow in the far corner,
+          so the band reads as a lit plane rather than a flat fill */}
       <div
         aria-hidden="true"
-        className="scrim-movement absolute inset-0 lg:hidden"
+        className="pointer-events-none absolute inset-0"
+        data-reveal="bloom"
+        style={{
+          background:
+            "radial-gradient(70% 95% at 16% 0%, rgba(244,241,236,0.45), transparent 62%), radial-gradient(75% 100% at 88% 105%, rgba(35,20,10,0.5), transparent 60%), radial-gradient(55% 70% at 62% 40%, rgba(220,166,116,0.55), transparent 70%)",
+        }}
       />
 
-      <div className="relative flex min-h-[440px] flex-col justify-end py-16 lg:aspect-[2.9/1] lg:min-h-[460px] lg:justify-center lg:py-0">
-        <div className="shell">
-          <div className="max-w-[34rem]">
-            <p className="eyebrow text-ivory/70">Join the Journey</p>
+      <div className="shell relative py-16 lg:py-28">
+        {/* The band's dominant: display type at full width, settling into place */}
+        <h2
+          id="newsletter-heading"
+          className="display whitespace-nowrap text-[clamp(2.6rem,13vw,13.75rem)] leading-[0.9] tracking-[0.06em] text-ink [--track-land:0.06em] lg:tracking-[0.14em] lg:[--track-land:0.14em]"
+        >
+          <span
+            className="block"
+            data-reveal="track"
+            style={{ "--d": "60ms" } as CSSProperties}
+          >
+            Be Part
+          </span>
+          <span
+            className="block"
+            data-reveal="track"
+            style={{ "--d": "180ms" } as CSSProperties}
+          >
+            Of The
+          </span>
+          <span
+            className="block"
+            data-reveal="track"
+            style={{ "--d": "300ms" } as CSSProperties}
+          >
+            Movement
+          </span>
+        </h2>
 
-            <h2
-              id="newsletter-heading"
-              className="display mt-5 text-display-md text-ivory"
-            >
-              <span className="block">Be Part Of</span>
-              <span className="block">The Movement</span>
-            </h2>
-
-            <p className="mt-5 max-w-[42ch] text-body text-ivory/80">
-              Get early access to new drops, exclusive updates, and stories from
-              the streets.
-            </p>
-
-            <NewsletterForm />
-          </div>
+        <div
+          data-reveal="rise"
+          style={{ "--d": "520ms" } as CSSProperties}
+        >
+          <NewsletterForm />
         </div>
       </div>
     </section>

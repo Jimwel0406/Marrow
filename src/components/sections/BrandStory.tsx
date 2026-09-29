@@ -1,69 +1,49 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Photo } from "@/components/media/Photo";
-import { SITE } from "@/lib/content";
 
 export function BrandStory() {
   return (
-    <section aria-labelledby="story-heading" className="bg-ivory-2">
-      <div className="grid lg:grid-cols-[46%_54%]">
-        {/* Story photograph: model with graphic jacket back against a concrete facade */}
-        <div className="relative min-h-[380px] sm:min-h-[460px] lg:min-h-[560px]">
-          <Photo
-            shot="story"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            src="/images/shop-story.jpg"
-            alt="A model in a black jacket with the Marrow back graphic, leaning against a railing in front of a concrete building"
-            className="absolute inset-0 h-full w-full"
-          />
-        </div>
+    <section
+      aria-labelledby="story-heading"
+      className="relative isolate overflow-hidden bg-ink text-ivory"
+    >
+      {/* Story photograph — full-bleed band, wipes in left to right */}
+      <div className="absolute inset-0" data-reveal="wipe">
+        <Photo
+          shot="story"
+          sizes="100vw"
+          src="/images/shop-story.jpg"
+          alt="A model in a black jacket with the Marrow back graphic, leaning against a railing in front of a concrete building"
+          className="h-full w-full"
+          imgClassName="object-[50%_30%]"
+        />
+      </div>
 
-        {/* Story copy */}
-        <div className="flex items-stretch">
-          <div className="flex w-full flex-col px-5 py-16 md:px-11 lg:px-14 lg:py-20">
-            <div className="grid flex-1 gap-x-12 gap-y-10 sm:grid-cols-[minmax(0,31rem)_minmax(9rem,1fr)] sm:items-stretch">
-              <div className="max-w-[31rem]">
-                <p className="eyebrow text-muted">Shop Story</p>
+      {/* Scrim: holds the statement legible along the bottom edge */}
+      <div className="scrim-bottom absolute inset-0" aria-hidden="true" />
 
-                <h2
-                  id="story-heading"
-                  className="display mt-5 text-display-md leading-[1.35] tracking-[0.2em] text-ink"
-                >
-                  <span className="block">More Than</span>
-                  <span className="block">Just Clothes</span>
-                </h2>
+      {/* The founding line, set on the photograph at display size */}
+      <div className="relative z-10 flex h-[min(84vh,760px)] min-h-[520px] items-end">
+        <div className="shell w-full pb-14 lg:pb-20">
+          <h2
+            id="story-heading"
+            className="display pb-[0.14em] text-[clamp(2.5rem,6.2vw,6rem)] leading-[0.95] text-ivory"
+            data-reveal="line"
+            style={{ "--d": "160ms" } as CSSProperties}
+          >
+            <span className="block">
+              Marrow is for the days you refuse to shrink.
+            </span>
+          </h2>
 
-                <p className="mt-6 text-body text-muted">
-                  <span className="uppercase">Marrow</span> was born from a
-                  belief: that what you wear should mean something. We create
-                  timeless streetwear for people who move differently &mdash;
-                  dreamers, doers, and those who find beauty in-between.
-                </p>
-              </div>
-
-              {/* Publication-style sidebar: place and date */}
-              <figure className="relative hidden min-h-0 sm:flex">
-                <Photo
-                  shot="tower"
-                  src="/images/tower.jpg"
-                  sizes="180px"
-                  alt="Glass office towers above palms in the Manila skyline"
-                  className="h-full w-full"
-                />
-                <figcaption className="absolute inset-x-0 bottom-0 border-t border-ivory/20 bg-ink/55 pt-3 text-[10px] leading-[1.7] font-semibold tracking-[0.22em] text-ivory uppercase backdrop-blur-sm">
-                  <span className="block px-3 pb-3">
-                    {SITE.founded}
-                    <br />
-                    {SITE.location}
-                  </span>
-                </figcaption>
-              </figure>
-            </div>
-
-            <Link
-              href="/about"
-              className="rule-link mt-10 w-fit self-start text-charcoal hover:text-ink"
-            >
+          <div
+            className="mt-8"
+            data-reveal="rise"
+            style={{ "--d": "420ms" } as CSSProperties}
+          >
+            <Link href="/about" className="rule-link text-ivory">
               Learn More
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
             </Link>

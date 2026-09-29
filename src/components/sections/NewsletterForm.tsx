@@ -28,8 +28,8 @@ export function NewsletterForm() {
       </label>
 
       <div
-        className={`flex items-stretch border border-ivory transition-colors duration-300 ${
-          status === "error" ? "border-[#e0a08a]" : ""
+        className={`flex items-stretch border border-ink transition-colors duration-300 ${
+          status === "error" ? "border-[#6e2a10]" : ""
         }`}
       >
         <input
@@ -46,13 +46,13 @@ export function NewsletterForm() {
             setEmail(event.target.value);
             if (status !== "idle") setStatus("idle");
           }}
-          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-micro text-ivory placeholder:text-ivory focus:outline-none"
+          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-micro text-ink placeholder:text-ink/60 focus:outline-none"
         />
 
         <button
           type="submit"
           aria-label="Subscribe to the Marrow newsletter"
-          className="flex w-14 shrink-0 items-center justify-center text-ivory transition-colors duration-300 hover:bg-ivory hover:text-ink"
+          className="flex w-14 shrink-0 items-center justify-center text-ink transition-colors duration-300 hover:bg-ink hover:text-dusk"
         >
           <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
         </button>
@@ -62,10 +62,10 @@ export function NewsletterForm() {
         id="newsletter-status"
         role="status"
         aria-live="polite"
-        className="mt-3 min-h-[1.25rem] text-[13px] font-medium text-ivory/80"
+        className="mt-3 min-h-[1.25rem] text-[13px] font-medium text-ink/80"
       >
         {status === "error" && (
-          <span className="text-[#f0bda9]">
+          <span className="text-[#3a1206]">
             Enter a valid email address, for example name@example.com.
           </span>
         )}

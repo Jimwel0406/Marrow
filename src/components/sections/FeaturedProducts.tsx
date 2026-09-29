@@ -7,60 +7,73 @@ export function FeaturedProducts() {
   return (
     <section
       aria-labelledby="essentials-heading"
-      className="bg-ivory py-10 lg:py-[3.5rem]"
+      className="bg-ivory py-16 lg:py-24"
     >
-      <div className="shell grid grid-cols-1 gap-x-10 gap-y-12 lg:grid-cols-[minmax(0,0.33fr)_minmax(0,0.67fr)]">
-        {/* Section intro */}
-        <div className="lg:pt-1">
-          <p className="eyebrow text-muted">Featured Products</p>
+      {/* Editorial masthead — display-lg headline, copy and action right-aligned */}
+      <div className="shell">
+        <div
+          className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between md:gap-12"
+          data-reveal="rise"
+        >
+          <div>
+            <h2
+              id="essentials-heading"
+              className="display mt-5 text-display-lg text-ink"
+            >
+              <span className="block">The</span>
+              <span className="block">Essentials</span>
+            </h2>
+          </div>
 
-          <h2
-            id="essentials-heading"
-            className="display mt-5 text-display-md leading-[1.35] text-ink"
-          >
-            <span className="block">The</span>
-            <span className="block">Essentials</span>
-          </h2>
-
-          <p className="mt-5 max-w-[26ch] text-body text-muted">
-            Timeless pieces, designed for everyday movement.
-          </p>
-
-          <Link
-            href="/shop"
-            className="rule-link mt-7 text-charcoal hover:text-ink"
-          >
-            Shop All
-            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
-          </Link>
+          <div className="flex flex-col items-start gap-5 md:items-end md:pb-3">
+            <Link
+              href="/shop"
+              className="rule-link text-charcoal hover:text-ink"
+            >
+              Shop All
+              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
+            </Link>
+          </div>
         </div>
-
-        {/* Product rail — reads as part of the editorial grid, not as cards */}
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-9 sm:grid-cols-4 sm:gap-x-5">
-          {FEATURED_PRODUCTS.map((product) => (
-            <li key={product.name} className="group">
-              <Link
-                href={`/shop/${product.shot}`}
-                className="block focus-visible:outline-offset-4"
-              >
-                <Photo
-                  shot={product.shot}
-                  src={product.src}
-                  sizes="(min-width: 1024px) 17vw, (min-width: 640px) 24vw, 45vw"
-                  alt={`${product.name} — ${product.material}`}
-                  className="photo-zoom aspect-[3/4] w-full"
-                />
-                <h3 className="mt-4 text-[12px] font-semibold tracking-[0.14em] text-ink uppercase">
-                  {product.name}
-                </h3>
-                <p className="mt-1.5 text-[15px] font-medium text-muted">
-                  {product.price}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </div>
+
+      {/* Full-bleed uniform rail — four equal panels, 0 gap, hairline grid */}
+      <ul
+        className="mt-8 grid grid-cols-2 gap-px bg-stone lg:mt-12 lg:grid-cols-4"
+        data-reveal="stagger-sm"
+      >
+        {FEATURED_PRODUCTS.map((product) => (
+          <li key={product.name} className="group bg-ivory">
+            <Link
+              href={`/shop/${product.shot}`}
+              className="block focus-visible:outline-offset-4"
+            >
+              <Photo
+                shot={product.shot}
+                src={product.src}
+                sizes="(min-width: 768px) 25vw, 50vw"
+                alt={`${product.name} — ${product.material}`}
+                className="photo-zoom aspect-[3/4] w-full"
+              />
+
+              <div className="px-4 pt-4 pb-6 lg:px-6 lg:pt-5 lg:pb-7">
+                <div className="flex items-baseline justify-between gap-3">
+                  <h3 className="text-[12px] font-semibold tracking-[0.14em] text-ink uppercase lg:text-[13px]">
+                    {product.name}
+                  </h3>
+                  <span className="text-[14px] font-medium tabular-nums text-ink lg:text-[15px]">
+                    {product.price}
+                  </span>
+                </div>
+
+                <p className="mt-1.5 text-[12px] text-muted lg:text-[13px]">
+                  {product.material}
+                </p>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

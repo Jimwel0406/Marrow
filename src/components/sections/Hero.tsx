@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Photo } from "@/components/media/Photo";
@@ -22,28 +23,49 @@ export function Hero() {
         />
       </div>
 
-      <div className="relative z-10 flex h-[min(100svh,720px)] min-h-[600px] flex-col justify-between lg:h-screen lg:min-h-[600px]">
+      {/* Cinematic scrim: holds the display type dominant over the photograph */}
+      <div className="scrim-left-soft absolute inset-0" aria-hidden="true" />
+
+      <div className="relative z-10 flex h-[100svh] min-h-[600px] flex-col justify-between">
         {/* Hero copy */}
         <div className="shell pt-[152px] lg:pt-[224px]">
-          <div className="max-w-[46rem]">
-            <p className="eyebrow text-ivory/75">Fall / Winter {new Date().getFullYear()}</p>
-
+          <div className="max-w-[62rem]">
             <h1
               id="hero-heading"
-              className="display mt-5 text-[clamp(2.25rem,5.2vw,4.5rem)] tracking-[0.2em] text-ivory"
+              className="display mt-6 text-[clamp(2.125rem,7.4vw,6.5rem)] leading-[0.95] tracking-[0.16em] min-[640px]:tracking-[0.2em] text-ivory"
             >
-              <span className="block">Built for</span>
-              <span className="block">What&rsquo;s Next</span>
+              <span
+                className="block overflow-hidden"
+                data-reveal="line"
+                style={{ "--d": "60ms" } as CSSProperties}
+              >
+                <span className="block">Built for</span>
+              </span>
+              <span
+                className="block overflow-hidden"
+                data-reveal="line"
+                style={{ "--d": "180ms" } as CSSProperties}
+              >
+                <span className="block">What&rsquo;s Next</span>
+              </span>
             </h1>
 
-            <p className="mt-5 max-w-[34ch] text-body text-ivory/80">
+            <p
+              className="mt-6 max-w-[34ch] text-body text-ivory/80"
+              data-reveal="rise"
+              style={{ "--d": "340ms" } as CSSProperties}
+            >
               Functional silhouettes. Elevated essentials.
               <br className="hidden sm:block" /> A new chapter in modern
               streetwear.
             </p>
 
-            <div className="mt-10">
-              <Link href="/shop" className="btn btn-solid group">
+            <div
+              className="mt-12"
+              data-reveal="rise"
+              style={{ "--d": "460ms" } as CSSProperties}
+            >
+              <Link href="/shop" className="btn btn-solid group min-h-[52px] px-7">
                 Shop the Collection
                 <ArrowRight
                   className="h-3.5 w-3.5 transition-transform duration-300 ease-[var(--ease-editorial)] group-hover:translate-x-1"
@@ -51,19 +73,6 @@ export function Hero() {
                 />
               </Link>
             </div>
-          </div>
-        </div>
-
-        {/* Hero footer rail */}
-        <div className="shell flex items-end justify-end pb-8 lg:pb-10">
-          <div className="hidden flex-col items-center gap-3 lg:flex">
-            <span
-              aria-hidden="true"
-              className="block h-16 w-px bg-gradient-to-b from-transparent via-ivory/45 to-ivory/70"
-            />
-            <span className="text-[10px] font-semibold tracking-[0.32em] text-ivory/70 uppercase">
-              Scroll
-            </span>
           </div>
         </div>
       </div>
