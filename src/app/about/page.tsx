@@ -100,31 +100,33 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div data-reveal="wipe">
+      <div>
         <ImageBand
-          src="/images/campaign.jpg"
+          src="/images/about/colonnade-campaign-hq.png"
+          imageReveal="wipe"
+          mobileSrc="/images/about/colonnade-campaign-mobile.png"
           shot="campaign"
-          alt="Two models in black Marrow outerwear on a river walk at sunset, city skyline behind them"
+          alt="Generated editorial image of a model in black technical layers standing within a sunlit concrete colonnade"
           eyebrow="In the field"
-          caption="Winter 26 campaign."
-          position="object-[50%_42%]"
-        />
-      </div>
-
-      <section aria-label="Continue" className="bg-ivory pt-10 pb-20 lg:pt-14 lg:pb-28">
-        <div className="shell flex flex-wrap items-center justify-between gap-x-10 gap-y-6 border-t border-ink/12 pt-6" data-reveal="rise">
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-            <Link href="/shop" className="rule-link text-charcoal hover:text-ink">
+          caption="Winter study — generated editorial concept."
+          position="object-top"
+          sizes="100vw"
+          quality={90}
+          grain={false}
+          actions={
+            <>
+            <Link href="/shop" className="rule-link inline-flex min-h-11 items-center gap-4 text-ivory hover:text-ivory">
               Shop the range
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
             </Link>
-            <Link href="/journal" className="rule-link text-charcoal hover:text-ink">
+            <Link href="/journal" className="rule-link inline-flex min-h-11 items-center gap-4 text-ivory hover:text-ivory">
               Read the notes
               <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
             </Link>
-          </div>
-        </div>
-      </section>
+            </>
+          }
+        />
+      </div>
     </>
   );
 }

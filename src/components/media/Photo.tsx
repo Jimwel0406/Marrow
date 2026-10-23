@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import { SHOTS, type Shot } from "./PlaceholderArt";
 
 type PhotoProps = {
@@ -9,6 +9,8 @@ type PhotoProps = {
   className?: string;
   /** drop in the final photograph and the layout does not move */
   src?: string;
+  /** Optional portrait art direction below 640px; loaded instead of the wide image. */
+  mobileSrc?: string;
   sizes?: string;
   priority?: boolean;
   /** film grain, on by default so every frame reads as one campaign */
@@ -25,6 +27,7 @@ export function Photo({
   alt,
   className = "",
   src,
+  mobileSrc,
   sizes = "100vw",
   priority = false,
   grain = true,
@@ -36,6 +39,14 @@ export function Photo({
   return (
     <div className={`relative overflow-hidden bg-ink-3 ${grain ? "grain" : ""} ${className}`}>
       {src ? (
+        <picture>
+        {mobileSrc && (
+          <source
+            media="(max-width: 639px)"
+            sizes="100vw"
+            srcSet={getImageProps({ src: mobileSrc, alt, fill: true, sizes: "100vw", quality }).props.srcSet}
+          />
+        )}
         <Image
           src={src}
           alt={alt}
@@ -45,6 +56,7 @@ export function Photo({
           quality={quality}
           className={`object-cover ${imgClassName}`}
         />
+        </picture>
       ) : (
         <svg
           role="img"

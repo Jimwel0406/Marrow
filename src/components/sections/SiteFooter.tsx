@@ -29,7 +29,7 @@ export function SiteFooter() {
           className="transition-opacity duration-300 hover:opacity-80"
           aria-label="Marrow — home"
         >
-          <BrandLockup height={36} />
+          <BrandLockup height={48} />
         </Link>
 
         <nav aria-label="Footer">

@@ -7,18 +7,19 @@ import { Photo } from "@/components/media/Photo";
  * Hero — one full-height photograph with the statement held in the right
  * column of the shell and the description block sitting under it.
  * Geometry follows the reference frame (zuno home-01):
- *   · section 116svh desktop, taller again on tablet and small phones
+ *   · section 116svh desktop, one full screen below that
  *   · content column capped at 520px, 40px under the headline
  *   · description block 308px wide, 24px from copy to CTA
  *   · headline 95.2px / 700 / line-height 1 / -0.03em tracking
- * Below 992px the column centres and the stack starts under the header.
+ * Below 992px the copy sits at the lower left beneath the subject's face,
+ * with a mobile crop, stronger lower scrim and full-width phone CTA.
  */
 export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
       data-hero
-      className="relative isolate h-[120svh] overflow-hidden bg-ink text-ivory min-[480px]:h-[100svh] min-[768px]:h-[120svh] min-[992px]:h-[116svh]"
+      className="relative isolate min-h-[640px] h-[100svh] overflow-hidden bg-ink text-ivory min-[992px]:min-h-0 min-[992px]:h-[116svh]"
     >
       {/* Hero photograph: model beneath a concrete overhang. Mirrored so the
           subject rides the left of the frame and the dark underpass holds the
@@ -27,11 +28,15 @@ export function Hero() {
         <Photo
           shot="hero"
           priority
-          sizes="100vw"
+          // Account for the landscape image's rendered width under object-cover
+          // in a tall hero, rather than requesting only the narrow phone width.
+          sizes="(min-width: 992px) max(100vw, 224svh), max(100vw, 193svh, 1236px)"
+          quality={90}
+          grain={false}
           src="/images/hero.jpg"
           alt="A model in a black technical jacket and backpack standing beneath a concrete overhang, city skyline behind"
           className="h-full w-full"
-          imgClassName="-scale-x-100 object-[46%_50%]"
+          imgClassName="-scale-x-100 object-[64%_50%] min-[992px]:object-[46%_50%]"
         />
       </div>
 
@@ -40,17 +45,17 @@ export function Hero() {
         className="scrim-right-soft absolute inset-0 hidden min-[992px]:block"
         aria-hidden="true"
       />
-      {/* Below 992 the statement is centred over the subject: a calm veil */}
+      {/* Mobile: preserve the portrait above a dependable dark text area. */}
       <div
-        className="scrim-movement absolute inset-0 min-[992px]:hidden"
+        className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(8,9,11,0.18)_20%,rgba(8,9,11,0.35)_45%,rgba(8,9,11,0.9)_100%)] min-[992px]:hidden"
         aria-hidden="true"
       />
 
-      <div className="shell relative z-10 flex h-full flex-col items-center justify-start gap-6 pt-[132px] text-center min-[480px]:gap-10 min-[480px]:pt-[180px] min-[768px]:pt-[160px] min-[992px]:items-end min-[992px]:justify-center min-[992px]:pt-0 min-[992px]:pb-[10vh] min-[992px]:text-left">
-        <div className="flex w-full flex-col items-center gap-5 min-[480px]:gap-10 min-[992px]:max-w-[520px] min-[992px]:items-start">
+      <div className="shell relative z-10 flex min-h-[640px] h-full flex-col items-start justify-end gap-6 pt-28 pb-[max(2rem,env(safe-area-inset-bottom))] text-left min-[480px]:gap-10 min-[768px]:pb-16 min-[992px]:min-h-0 min-[992px]:justify-center min-[992px]:items-end min-[992px]:pt-0 min-[992px]:pb-[10vh]">
+        <div className="flex w-full flex-col items-start gap-6 min-[480px]:gap-8 min-[992px]:gap-10 min-[992px]:max-w-[520px]">
           <h1
             id="hero-heading"
-            className="text-[1.925rem] font-bold leading-none tracking-[-0.03em] min-[480px]:text-[3.325rem] min-[768px]:text-[3.5rem] min-[992px]:text-[5.95rem]"
+            className="text-[clamp(2.5rem,11vw,3.325rem)] font-bold leading-none tracking-[-0.03em] min-[768px]:text-[3.5rem] min-[992px]:text-[5.95rem]"
           >
             <span
               className="block overflow-hidden"
@@ -68,9 +73,9 @@ export function Hero() {
             </span>
           </h1>
 
-          <div className="flex w-[80%] flex-col items-center gap-6 min-[480px]:w-[308px] min-[992px]:items-start">
+          <div className="flex w-full flex-col items-start gap-6 min-[480px]:w-[308px]">
             <p
-              className="text-[1rem] font-medium leading-[1.32] tracking-[-0.02em] text-ivory min-[480px]:text-[1.4rem] min-[768px]:text-[1.27rem]"
+              className="max-w-[19rem] text-[1.125rem] font-medium leading-[1.45] tracking-[-0.02em] text-ivory min-[480px]:text-[1.4rem] min-[768px]:text-[1.27rem]"
               data-reveal="rise"
               style={{ "--d": "340ms" } as CSSProperties}
             >
@@ -79,7 +84,7 @@ export function Hero() {
 
             <Link
               href="/shop"
-              className="btn btn-solid group min-h-[56px] min-[480px]:px-[30px]"
+              className="btn btn-solid group min-h-[56px] w-full whitespace-nowrap px-4 text-base tracking-[0.04em] min-[480px]:w-auto min-[480px]:px-[30px] min-[480px]:tracking-[0.08em]"
               data-reveal="rise"
               style={{ "--d": "460ms" } as CSSProperties}
             >

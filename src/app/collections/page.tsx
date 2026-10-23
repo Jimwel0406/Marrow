@@ -27,10 +27,6 @@ export default function CollectionsPage() {
           </div>
           <ul className="space-y-16 lg:space-y-24">
             {COLLECTIONS.map((collection) => {
-              const pieces = PRODUCTS.filter((product) =>
-                collection.shots.includes(product.shot),
-              ).length;
-
               return (
                 <li key={collection.handle} className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-[4.5vw]">
                   <div className="min-w-0" data-reveal="rise">
@@ -42,9 +38,6 @@ export default function CollectionsPage() {
                         </span>
                       ))}
                     </h2>
-                    <p className="mt-8 max-w-[22rem] text-body text-muted lg:mt-10">
-                      {pieces} {pieces === 1 ? "piece" : "pieces"}. A cold-weather run in limited numbers.
-                    </p>
                     <Link href={`/collections/${collection.handle}`} className="rule-link mt-7 inline-flex items-center gap-10 text-charcoal hover:text-ink">
                       Explore the collection
                       <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
