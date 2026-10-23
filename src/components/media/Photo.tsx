@@ -37,7 +37,7 @@ export function Photo({
   const art = SHOTS[shot];
 
   return (
-    <div className={`relative overflow-hidden bg-ink-3 ${grain ? "grain" : ""} ${className}`}>
+    <div data-photo className={`relative overflow-hidden bg-ink-3 ${grain ? "grain" : ""} ${className}`}>
       {src ? (
         <picture>
         {mobileSrc && (

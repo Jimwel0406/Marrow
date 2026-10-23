@@ -10,15 +10,60 @@ export function Reveal() {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const pending = new Set<Element>();
     const managed = new Set<HTMLElement>();
+    const waiting = new Set<Element>();
+    const imageTasks = new Map<HTMLImageElement, Promise<void>>();
+    const imageCleanups: (() => void)[] = [];
+    let disposed = false;
     let observer: IntersectionObserver | undefined;
+    let imageObserver: IntersectionObserver | undefined;
     let mutations: MutationObserver | undefined;
     let frame = 0;
-    const stamp = (el: Element, index = 0) => {
+    const readyImage = (img: HTMLImageElement) => {
+      const existing = imageTasks.get(img);
+      if (existing) return existing;
+      // Retain responsive srcset selection; only bring the native request forward.
+      img.loading = "eager";
+      const task = new Promise<void>(resolve => {
+        const finish = () => {
+          img.removeEventListener("load", finish);
+          img.removeEventListener("error", finish);
+          if (img.naturalWidth && typeof img.decode === "function") {
+            void img.decode().catch(() => {}).then(resolve);
+          } else resolve(); // A failed request must never trap content in its hidden state.
+        };
+        if (img.complete) finish();
+        else {
+          img.addEventListener("load", finish, {once: true});
+          img.addEventListener("error", finish, {once: true});
+          imageCleanups.push(() => {
+            img.removeEventListener("load", finish);
+            img.removeEventListener("error", finish);
+            resolve();
+          });
+        }
+      });
+      imageTasks.set(img, task);
+      return task;
+    };
+    const show = (el: Element, index: number) => {
+      if (disposed) return;
       if (el.hasAttribute("data-revealed")) return;
       (el as HTMLElement).style.setProperty("--reveal-offset", `${Math.min(index * 150, 300)}ms`);
       el.setAttribute("data-revealed", "");
       pending.delete(el);
       observer?.unobserve(el);
+    };
+    const stamp = (el: Element, index = 0) => {
+      if (el.hasAttribute("data-revealed") || waiting.has(el)) return;
+      const images = [...el.querySelectorAll<HTMLImageElement>("img")];
+      if (media.matches || !images.length) { show(el, index); return; }
+      waiting.add(el);
+      pending.delete(el);
+      observer?.unobserve(el);
+      void Promise.all(images.map(readyImage)).then(() => {
+        waiting.delete(el);
+        show(el, index);
+      });
     };
     const prepare = (el: HTMLElement) => {
       if (managed.has(el)) return;
@@ -29,6 +74,7 @@ export function Reveal() {
       observer.observe(el);
     };
     const watch = (root: ParentNode) => {
+      root.querySelectorAll<HTMLImageElement>("[data-photo] img").forEach(img => imageObserver?.observe(img));
       const elements = [...root.querySelectorAll<HTMLElement>("[data-reveal]")];
       if (root instanceof HTMLElement && root.matches("[data-reveal]")) elements.unshift(root);
       elements.forEach(el => {
@@ -61,6 +107,14 @@ export function Reveal() {
       }
     };
     try {
+      if ("IntersectionObserver" in window) {
+        imageObserver = new IntersectionObserver(entries => {
+          entries.filter(entry => entry.isIntersecting).forEach(entry => {
+            void readyImage(entry.target as HTMLImageElement);
+            imageObserver?.unobserve(entry.target);
+          });
+        }, {rootMargin: "1000px 300px", threshold: 0});
+      }
       if ("IntersectionObserver" in window && !media.matches) {
         observer = new IntersectionObserver(entries => {
           entries.filter(entry => entry.isIntersecting).forEach((entry, index) => stamp(entry.target, index));
@@ -82,8 +136,11 @@ export function Reveal() {
       managed.forEach(el => { el.removeAttribute("data-motion-ready"); stamp(el); });
     }
     return () => {
+      disposed = true;
       cancelAnimationFrame(frame);
       observer?.disconnect();
+      imageObserver?.disconnect();
+      imageCleanups.forEach(cleanup => cleanup());
       mutations?.disconnect();
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);

@@ -47,7 +47,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
-    formats: ["image/avif", "image/webp"],
+    // WebP avoids AVIF's slower cold-cache encoding before the first reveal.
+    formats: ["image/webp"],
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
