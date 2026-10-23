@@ -9,8 +9,7 @@ export function FeaturedProducts() {
       aria-labelledby="essentials-heading"
       className="bg-ivory py-16 lg:py-24"
     >
-      {/* Editorial masthead — display-lg headline, supporting copy and the
-          action set on a shared baseline at the right */}
+      {/* Editorial masthead with the action aligned at the right. */}
       <div className="shell">
         <div
           className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between md:gap-16"
@@ -25,11 +24,6 @@ export function FeaturedProducts() {
           </h2>
 
           <div className="flex max-w-[30rem] flex-col items-start gap-6 md:items-end">
-            <p className="text-body text-muted md:text-right">
-              Four pieces, cut in Manila in limited runs. Matte ripstop,
-              loopback cotton, dry-touch twill.
-            </p>
-
             <Link
               href="/shop"
               className="rule-link text-charcoal hover:text-ink"
