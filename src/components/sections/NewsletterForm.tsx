@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import styles from "./Newsletter.module.css";
 
 type Status = "idle" | "error" | "success";
 
@@ -22,14 +23,15 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="mt-9 max-w-[26rem]">
+    <form onSubmit={handleSubmit} noValidate className="relative mt-8 min-h-[7.5rem] text-left">
       <label htmlFor="newsletter-email" className="sr-only">
         Email address
       </label>
 
+      {/* Stack on small screens so the larger field and action stay readable. */}
       <div
-        className={`flex items-stretch border border-ink transition-colors duration-300 ${
-          status === "error" ? "border-[#6e2a10]" : ""
+        className={`${styles.field} flex flex-col items-stretch gap-3 border-b sm:flex-row sm:items-center py-3 transition-colors duration-300 focus-within:border-ink sm:gap-6 ${
+          status === "error" ? "border-[#6e2a10]" : "border-ink"
         }`}
       >
         <input
@@ -46,15 +48,16 @@ export function NewsletterForm() {
             setEmail(event.target.value);
             if (status !== "idle") setStatus("idle");
           }}
-          className="min-w-0 flex-1 bg-transparent px-4 py-3 text-micro text-ink placeholder:text-ink/60 focus:outline-none"
+          className="min-w-0 flex-1 bg-transparent py-3 text-[18px] leading-normal text-ink placeholder:text-muted lg:text-[22px]"
         />
 
         <button
           type="submit"
           aria-label="Subscribe to the Marrow newsletter"
-          className="flex w-14 shrink-0 items-center justify-center text-ink transition-colors duration-300 hover:bg-ink hover:text-dusk"
+          className={`${styles.button} inline-flex min-h-12 shrink-0 items-center justify-center gap-2 bg-ink px-4 py-4 text-[16px] leading-none font-semibold tracking-[0.12em] text-ivory uppercase hover:bg-charcoal sm:px-6 lg:text-[18px]`}
         >
-          <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
+          Sign Up
+          <ArrowUpRight aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.5} />
         </button>
       </div>
 
@@ -62,7 +65,7 @@ export function NewsletterForm() {
         id="newsletter-status"
         role="status"
         aria-live="polite"
-        className="mt-3 min-h-[1.25rem] text-[13px] font-medium text-ink/80"
+        className="mt-3 text-[16px] leading-relaxed text-ink/80"
       >
         {status === "error" && (
           <span className="text-[#3a1206]">

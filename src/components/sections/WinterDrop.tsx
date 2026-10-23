@@ -27,7 +27,7 @@ export function WinterDrop() {
       <div className="relative flex min-h-[460px] flex-col justify-end py-16 lg:min-h-[420px] lg:justify-center lg:py-0">
         <div className="shell flex items-end justify-between gap-10">
           <div className="max-w-[30rem]">
-            <p className="eyebrow text-ivory/80">Limited Time</p>
+            <p className="eyebrow text-ivory">Limited Time</p>
 
             <h2
               id="drop-heading"
@@ -40,7 +40,7 @@ export function WinterDrop() {
               </span>
             </h2>
 
-            <p className="mt-5 max-w-[34ch] text-body text-ivory/80">
+            <p className="mt-5 max-w-[34ch] text-body text-ivory">
               New arrivals. Same vision.
             </p>
 

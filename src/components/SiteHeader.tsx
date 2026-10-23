@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { BrandLockup } from "@/components/BrandMark";
+import { useCart } from "@/components/cart/CartProvider";
 import { NAV_LINKS } from "@/lib/content";
 
 const ICON_BUTTON =
@@ -14,13 +16,20 @@ const ICON_LINK =
   "hidden h-11 w-11 items-center justify-center text-ivory/85 transition-colors duration-300 hover:text-ivory sm:inline-flex";
 
 const NAV_ITEM =
-  "text-[13px] font-medium uppercase tracking-[0.14em] text-ivory/85 transition-colors duration-300 hover:text-ivory";
+  "text-[16px] font-semibold uppercase tracking-[0.06em] text-ivory/85 transition-colors duration-300 hover:text-ivory";
 
 /* How far above the hero's end the bar starts sliding in, so it has already
    arrived by the time the hero clears rather than appearing right on its edge. */
 const PIN_LEAD = 128;
 
 export function SiteHeader() {
+  const { count } = useCart();
+  const pathname = usePathname();
+  const hasHero = pathname === "/";
+
+  /* A section stays marked while you are anywhere inside it. */
+  const isCurrent = (href: string) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
   const [open, setOpen] = useState(false);
   const [pinned, setPinned] = useState(false);
   const [tracking, setTracking] = useState(true);
@@ -41,7 +50,7 @@ export function SiteHeader() {
 
     const measure = () => {
       const barH = bar.offsetHeight;
-      const hero = document.querySelector("[data-hero]");
+      const hero = hasHero ? document.querySelector("[data-hero]") : null;
       const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
       const y = window.scrollY;
 
@@ -67,7 +76,7 @@ export function SiteHeader() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", measure);
     };
-  }, [open]);
+  }, [open, pathname, hasHero]);
 
 useEffect(() => {
     if (!open) return;
@@ -99,18 +108,19 @@ useEffect(() => {
   }, [open]);
 
   /* Off-screen but still in the DOM — take it out of the tab order too. */
-  const offscreen = !pinned && !tracking;
+  const offscreen = hasHero && !pinned && !tracking;
 
   return (
     <header
       ref={headerRef}
       inert={offscreen || undefined}
+      style={hasHero ? undefined : { transform: "translateY(0)" }}
       className={`fixed inset-x-0 top-0 z-40 will-change-transform ${
         tracking
           ? ""
           : "transition-[transform,background-color,border-color] duration-500 ease-[var(--ease-editorial)]"
       } ${
-        pinned || open
+        !hasHero || pinned || open
           ? "border-b border-ivory/10 bg-ink/92 backdrop-blur-md"
           : "border-b border-transparent"
       }`}
@@ -130,10 +140,18 @@ useEffect(() => {
 
         {/* Desktop navigation */}
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-9">
+          <ul className="flex items-center gap-5 xl:gap-9">
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
-                <Link href={link.href} className={NAV_ITEM}>
+                <Link
+                  href={link.href}
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                  className={`${NAV_ITEM} ${
+                    isCurrent(link.href)
+                      ? "text-ivory underline decoration-ivory/50 decoration-1 underline-offset-[6px]"
+                      : ""
+                  }`}
+                >
                   {link.label}
                 </Link>
               </li>
@@ -153,7 +171,7 @@ useEffect(() => {
               alt=""
               width={1536}
               height={1024}
-              className="h-[26px] w-auto"
+              className="h-[26px] w-auto" sizes="26px"
               aria-hidden
             />
           </Link>
@@ -167,23 +185,31 @@ useEffect(() => {
               alt=""
               width={1254}
               height={1254}
-              className="h-[26px] w-auto"
+              className="h-[26px] w-auto" sizes="26px"
               aria-hidden
             />
           </Link>
 <Link
             href="/cart"
-            className={`${ICON_LINK}`}
-            aria-label="Shopping bag, 0 items"
+            className={`${ICON_LINK} relative`}
+            aria-label={`Shopping bag, ${count} ${count === 1 ? "item" : "items"}`}
           >
             <Image
               src="/icons/cart.png"
               alt=""
               width={1536}
               height={1024}
-              className="h-[26px] w-auto"
+              className="h-[26px] w-auto" sizes="26px"
               aria-hidden
             />
+            {count > 0 && (
+              <span
+                aria-hidden="true"
+                className="absolute top-1 right-1 grid h-[18px] min-w-[18px] place-items-center bg-ivory px-1 text-[12px] leading-none font-bold text-ink tabular-nums"
+              >
+                {count}
+              </span>
+            )}
           </Link>
           <button
             ref={toggleRef}
@@ -217,7 +243,10 @@ useEffect(() => {
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block py-4 text-sm font-medium uppercase tracking-[0.18em] text-ivory/85 transition-colors duration-300 hover:text-ivory"
+                  aria-current={isCurrent(link.href) ? "page" : undefined}
+                  className={`block py-4 text-base font-medium uppercase tracking-[0.18em] transition-colors duration-300 hover:text-ivory ${
+                    isCurrent(link.href) ? "text-ivory" : "text-ivory/85"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -232,14 +261,14 @@ useEffect(() => {
               <Link
                 href="/search"
                 onClick={() => setOpen(false)}
-                className="flex flex-col items-center gap-2 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-ivory/85 transition-colors duration-300 hover:text-ivory"
+                className="flex flex-col items-center gap-2 py-4 text-[16px] font-medium uppercase tracking-[0.18em] text-ivory/85 transition-colors duration-300 hover:text-ivory"
               >
                 <Image
                   src="/icons/search.png"
                   alt=""
                   width={1536}
                   height={1024}
-                  className="h-[22px] w-auto object-contain"
+                  className="h-[22px] w-auto object-contain" sizes="22px"
                   aria-hidden
                 />
                 <span>Search</span>
@@ -249,14 +278,14 @@ useEffect(() => {
               <Link
                 href="/account"
                 onClick={() => setOpen(false)}
-                className="flex flex-col items-center gap-2 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-ivory/85 transition-colors duration-300 hover:text-ivory"
+                className="flex flex-col items-center gap-2 py-4 text-[16px] font-medium uppercase tracking-[0.18em] text-ivory/85 transition-colors duration-300 hover:text-ivory"
               >
                 <Image
                   src="/icons/user.png"
                   alt=""
                   width={1254}
                   height={1254}
-                  className="h-[22px] w-auto object-contain"
+                  className="h-[22px] w-auto object-contain" sizes="22px"
                   aria-hidden
                 />
                 <span>Account</span>
@@ -266,14 +295,14 @@ useEffect(() => {
               <Link
                 href="/cart"
                 onClick={() => setOpen(false)}
-                className="flex flex-col items-center gap-2 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-ivory/85 transition-colors duration-300 hover:text-ivory"
+                className="flex flex-col items-center gap-2 py-4 text-[16px] font-medium uppercase tracking-[0.18em] text-ivory/85 transition-colors duration-300 hover:text-ivory"
               >
                 <Image
                   src="/icons/cart.png"
                   alt=""
                   width={1536}
                   height={1024}
-                  className="h-[22px] w-auto object-contain"
+                  className="h-[22px] w-auto object-contain" sizes="22px"
                   aria-hidden
                 />
                 <span>Cart</span>
@@ -285,6 +314,8 @@ useEffect(() => {
     </header>
   );
 }
+
+
 
 
 

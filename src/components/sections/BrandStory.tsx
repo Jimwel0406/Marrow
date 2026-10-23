@@ -29,7 +29,7 @@ export function BrandStory() {
         <div className="shell w-full pb-14 lg:pb-20">
           <h2
             id="story-heading"
-            className="display pb-[0.14em] text-[clamp(2.5rem,6.2vw,6rem)] leading-[0.95] text-ivory"
+            className="section-title pb-[0.14em] text-ivory"
             data-reveal="line"
             style={{ "--d": "160ms" } as CSSProperties}
           >

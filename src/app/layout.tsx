@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo } from "next/font/google";
+import { Archivo, Newsreader } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { Reveal } from "@/components/motion/Reveal";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
+import { CartProvider } from "@/components/cart/CartProvider";
 import { SITE } from "@/lib/content";
 import "lenis/dist/lenis.css";
 import "./globals.css";
@@ -13,6 +14,16 @@ const archivo = Archivo({
   display: "swap",
   variable: "--font-archivo",
   fallback: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+});
+
+/* The one serif on the site. Archivo carries the interface and every uppercase
+   display line; Newsreader is reserved for the editorial captions that sit on
+   photography, so the page has a second voice instead of one register. */
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-newsreader",
+  fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
 export const metadata: Metadata = {
@@ -82,24 +93,26 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={archivo.variable}>
-      <body className="bg-ivory text-charcoal antialiased">
+    <html lang="en" className={`${archivo.variable} ${newsreader.variable}`}>
+      <body className="flex min-h-dvh flex-col bg-ivory text-charcoal antialiased">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-ivory focus:px-5 focus:py-3 focus:text-[13px] focus:font-semibold focus:tracking-[0.18em] focus:text-ink focus:uppercase"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-ivory focus:px-5 focus:py-3 focus:text-[16px] focus:font-semibold focus:tracking-[0.18em] focus:text-ink focus:uppercase"
         >
           Skip to content
         </a>
 
-        <SiteHeader />
+        <CartProvider>
+          <SiteHeader />
 
-        <SmoothScroll />
+          <SmoothScroll />
 
-        <Reveal />
+          <Reveal />
 
-        <main id="main">{children}</main>
+          <main id="main" className="flex-1">{children}</main>
 
-        <SiteFooter />
+          <SiteFooter />
+        </CartProvider>
 
         <script
           type="application/ld+json"

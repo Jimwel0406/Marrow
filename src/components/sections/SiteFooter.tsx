@@ -33,12 +33,12 @@ export function SiteFooter() {
         </Link>
 
         <nav aria-label="Footer">
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:flex sm:gap-x-8">
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:flex sm:flex-wrap sm:gap-x-8">
             {FOOTER_LINKS.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="text-[12px] font-medium tracking-[0.16em] text-ivory/80 uppercase transition-colors duration-300 hover:text-ivory"
+                  className="text-[16px] font-semibold tracking-[0.06em] text-ivory uppercase transition-colors duration-300 hover:text-ivory"
                 >
                   {link.label}
                 </Link>
@@ -66,7 +66,7 @@ export function SiteFooter() {
 
           <span aria-hidden="true" className="hidden h-4 w-px bg-ivory/20 sm:block" />
 
-          <p className="text-[11px] font-medium tracking-[0.12em] text-ivory/65 uppercase">
+          <p className="text-[16px] font-medium tracking-[0.02em] text-ivory uppercase">
             &copy; {new Date().getFullYear()} {SITE.wordmark}. All rights reserved.
           </p>
         </div>

@@ -25,7 +25,6 @@ const featuredSchema = {
     item: {
       "@type": "Product",
       name: product.name,
-      sku: product.piece,
       material: product.material,
       brand: { "@type": "Brand", name: SITE.wordmark },
       offers: {

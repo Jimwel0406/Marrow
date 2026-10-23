@@ -1,0 +1,29 @@
+.root[data-revealed] { opacity: 1; }
+.line { display: block; overflow: hidden; padding-bottom: .12em; margin-bottom: -.12em; }
+.word { display: block; }
+.field { position: relative; }
+.field::after { content: ""; position: absolute; inset: auto 0 -1px; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease-editorial); pointer-events: none; }
+.field:focus-within::after { transform: scaleX(1); }
+.button { transition: transform .3s var(--ease-editorial), background-color .3s; }
+.button svg { transition: transform .35s var(--ease-editorial); }
+@media (hover: hover) {
+  .button:hover { transform: translateY(-2px); }
+  .button:hover svg { transform: translate(2px, -2px); }
+}
+.button:active { transform: translateY(0) scale(.97); }
+@media (prefers-reduced-motion: no-preference) {
+  .root:not([data-revealed]) .word { transform: translateY(110%) rotate(2deg); }
+  .root:not([data-revealed]) .label,
+  .root:not([data-revealed]) .content { opacity: 0; }
+  .root[data-revealed] .label { animation: settle .65s var(--ease-editorial) both; }
+  .root[data-revealed] .word { animation: unfold 1.05s var(--ease-editorial) .08s both; }
+  .root[data-revealed] .line:nth-child(2) .word { animation-delay: .24s; }
+  .root[data-revealed] .content { animation: settle .85s var(--ease-editorial) .42s both; }
+  .root[data-revealed] .field { animation: settle .85s var(--ease-editorial) .58s both; }
+}
+@keyframes unfold { from { transform: translateY(110%) rotate(2deg); } to { transform: translateY(0) rotate(0); } }
+@keyframes settle { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .root, .root * { animation: none !important; transition: none !important; transform: none !important; opacity: 1 !important; }
+  .field::after { transition: none; }
+}
