@@ -1,107 +1,100 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
+import { usePathname } from "next/navigation";
 
-/**
- * Stamps [data-revealed] on every [data-reveal] element once it nears the
- * viewport, letting CSS play that element's signature motion.
- *
- * Belt-and-suspenders: IntersectionObserver (threshold 0, so clipped/
- * pre-revealed elements still fire) is backed by a rAF-throttled rect check
- * on scroll/resize — plus a MutationObserver so nodes swapped in by dev
- * Fast Refresh or hydration get picked up again.
- */
+/** Local reveal sequences, with independent observers for cards on narrow screens. */
 export function Reveal() {
-  useEffect(() => {
+  const pathname = usePathname();
+  useLayoutEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const pending = new Set<Element>();
-
-    /* full-bleed photo wipes wait for genuine visibility (top crosses
-       55% of the screen) so the reveal plays while being looked at */
-    const deep = (el: Element) => el.getAttribute("data-reveal") === "wipe";
-
-    const stamp = (el: Element) => {
-      if (!el.hasAttribute("data-revealed")) el.setAttribute("data-revealed", "");
+    const managed = new Set<HTMLElement>();
+    let observer: IntersectionObserver | undefined;
+    let mutations: MutationObserver | undefined;
+    let frame = 0;
+    const stamp = (el: Element, index = 0) => {
+      if (el.hasAttribute("data-revealed")) return;
+      (el as HTMLElement).style.setProperty("--reveal-offset", `${Math.min(index * 150, 300)}ms`);
+      el.setAttribute("data-revealed", "");
       pending.delete(el);
-      observer.unobserve(el);
-      deepObserver.unobserve(el);
+      observer?.unobserve(el);
     };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) stamp(entry.target);
-        }
-      },
-      { threshold: 0, rootMargin: "0px 0px -6% 0px" },
-    );
-
-    const deepObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) stamp(entry.target);
-        }
-      },
-      { threshold: 0, rootMargin: "0px 0px -45% 0px" },
-    );
-
+    const prepare = (el: HTMLElement) => {
+      if (managed.has(el)) return;
+      managed.add(el);
+      if (media.matches || !observer) { stamp(el); return; }
+      el.setAttribute("data-motion-ready", "");
+      pending.add(el);
+      observer.observe(el);
+    };
     const watch = (root: ParentNode) => {
-      root.querySelectorAll?.("[data-reveal]:not([data-revealed])").forEach((el) => {
-        if (!pending.has(el)) {
-          pending.add(el);
-          (deep(el) ? deepObserver : observer).observe(el);
-        }
+      const elements = [...root.querySelectorAll<HTMLElement>("[data-reveal]")];
+      if (root instanceof HTMLElement && root.matches("[data-reveal]")) elements.unshift(root);
+      elements.forEach(el => {
+        if (managed.has(el)) return;
+        const kind = el.dataset.reveal;
+        if (kind === "stagger-sm" || kind === "stagger-wipe") {
+          managed.add(el);
+          // Observe each card rather than starting a long cascade at the container edge.
+          el.setAttribute("data-revealed", "");
+          [...el.children].forEach(child => {
+            if (!(child instanceof HTMLElement)) return;
+            child.setAttribute("data-reveal-item", kind === "stagger-wipe" ? "wipe" : "rise");
+            prepare(child);
+          });
+        } else prepare(el);
       });
     };
-
-    /* fallback: geometric check against the LIVE dom — immune to nodes
-       being swapped after mount (hydration patches, Fast Refresh).
-       Anything whose top is above the threshold — including elements
-       already scrolled past — stamps, so a swapped-in node can never be
-       stranded invisible above the viewport. */
     const check = () => {
-      document
-        .querySelectorAll("[data-reveal]:not([data-revealed])")
-        .forEach((el) => {
-          const limit = window.innerHeight * (deep(el) ? 0.55 : 0.94);
-          if (el.getBoundingClientRect().top < limit) stamp(el);
-        });
+      const visible = [...pending].filter(el => {
+        const r = el.getBoundingClientRect();
+        return r.top < innerHeight * .94 && r.left < innerWidth && r.right > 0;
+      });
+      visible.forEach((el, index) => stamp(el, index));
     };
-
-    let frame = 0;
-    const onViewportChange = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(check);
-    };
-
-    watch(document.body);
-    check();
-
-    const mutations = new MutationObserver((records) => {
-      for (const record of records) {
-        for (const node of record.addedNodes) {
-          if (node.nodeType === Node.ELEMENT_NODE) watch(node as Element);
-        }
+    const update = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(check); };
+    const reduce = () => {
+      if (media.matches) {
+        managed.forEach(el => { el.removeAttribute("data-motion-ready"); stamp(el); });
+        pending.clear();
       }
-      onViewportChange();
-    });
-    mutations.observe(document.body, { childList: true, subtree: true });
-
-    window.addEventListener("scroll", onViewportChange, { passive: true });
-    window.addEventListener("resize", onViewportChange);
-
+    };
+    try {
+      if ("IntersectionObserver" in window && !media.matches) {
+        observer = new IntersectionObserver(entries => {
+          entries.filter(entry => entry.isIntersecting).forEach((entry, index) => stamp(entry.target, index));
+        }, {threshold: 0, rootMargin: "0px 0px -6% 0px"});
+      }
+      watch(document.body);
+      check();
+      mutations = new MutationObserver(records => {
+        records.forEach(record => record.addedNodes.forEach(node => {
+          if (node instanceof HTMLElement) watch(node);
+        }));
+        update();
+      });
+      mutations.observe(document.body, {childList: true, subtree: true});
+      window.addEventListener("scroll", update, {passive: true});
+      window.addEventListener("resize", update);
+      media.addEventListener("change", reduce);
+    } catch {
+      managed.forEach(el => { el.removeAttribute("data-motion-ready"); stamp(el); });
+    }
     return () => {
       cancelAnimationFrame(frame);
-      observer.disconnect();
-      deepObserver.disconnect();
-      mutations.disconnect();
-      window.removeEventListener("scroll", onViewportChange);
-      window.removeEventListener("resize", onViewportChange);
+      observer?.disconnect();
+      mutations?.disconnect();
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      media.removeEventListener("change", reduce);
+      managed.forEach(el => {
+        el.removeAttribute("data-motion-ready");
+        el.removeAttribute("data-revealed");
+        el.removeAttribute("data-reveal-item");
+        el.style.removeProperty("--reveal-offset");
+      });
     };
-  }, []);
-
-  return (
-    <noscript>
-      <style>{`[data-reveal],[data-reveal]>*{opacity:1!important;transform:none!important;clip-path:none!important;animation:none!important}`}</style>
-    </noscript>
-  );
+  }, [pathname]);
+  return null;
 }

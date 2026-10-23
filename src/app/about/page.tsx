@@ -26,7 +26,8 @@ export default function AboutPage() {
         className="bg-ivory pt-[calc(64px+2.75rem)] pb-16 lg:pt-[calc(88px+2.75rem)] lg:pb-24"
       >
         <div className="shell grid gap-10 lg:min-h-[76svh] lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-[7vw]">
-          <figure className="order-2 min-w-0 lg:order-1" data-reveal="wipe">
+          <figure className="order-2 min-w-0 lg:order-1">
+            <div data-reveal="wipe">
             <Photo
               shot="story"
               src="/images/about/concrete-editorial.png"
@@ -36,6 +37,7 @@ export default function AboutPage() {
               className="aspect-[4/5] w-full lg:aspect-auto lg:h-[min(72svh,760px)]"
               imgClassName="object-[50%_55%]"
             />
+            </div>
             <figcaption className="mt-4 text-[16px] leading-[1.6] tracking-[0.02em] text-muted-2">
               Outerwear & architecture — generated editorial concept.
             </figcaption>

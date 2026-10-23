@@ -24,7 +24,7 @@ export function Hero() {
       {/* Hero photograph: model beneath a concrete overhang. Mirrored so the
           subject rides the left of the frame and the dark underpass holds the
           type on the right. */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" data-reveal="hero-image">
         <Photo
           shot="hero"
           priority
@@ -60,14 +60,14 @@ export function Hero() {
             <span
               className="block overflow-hidden"
               data-reveal="line"
-              style={{ "--d": "60ms" } as CSSProperties}
+              style={{ "--d": "0ms" } as CSSProperties}
             >
               <span className="block">Built for</span>
             </span>
             <span
               className="block overflow-hidden"
               data-reveal="line"
-              style={{ "--d": "180ms" } as CSSProperties}
+              style={{ "--d": "150ms" } as CSSProperties}
             >
               <span className="block">what&rsquo;s next</span>
             </span>
@@ -77,7 +77,7 @@ export function Hero() {
             <p
               className="max-w-[19rem] text-[1.125rem] font-medium leading-[1.45] tracking-[-0.02em] text-ivory min-[480px]:text-[1.4rem] min-[768px]:text-[1.27rem] min-[992px]:max-w-none min-[992px]:whitespace-nowrap"
               data-reveal="rise"
-              style={{ "--d": "340ms" } as CSSProperties}
+              style={{ "--d": "380ms" } as CSSProperties}
             >
               Functional silhouettes. Elevated essentials.
             </p>
@@ -86,7 +86,7 @@ export function Hero() {
               href="/shop"
               className="btn btn-solid group min-h-[56px] w-full whitespace-nowrap px-4 text-base tracking-[0.04em] min-[480px]:w-auto min-[480px]:px-[30px] min-[480px]:tracking-[0.08em]"
               data-reveal="rise"
-              style={{ "--d": "460ms" } as CSSProperties}
+              style={{ "--d": "540ms" } as CSSProperties}
             >
               Shop the Collection
               <ArrowRight

@@ -36,16 +36,18 @@ export function ShopByCategory() {
               href={category.href}
               className="group relative block aspect-[3/4] overflow-hidden focus-visible:outline-offset-2 lg:aspect-auto lg:h-[min(72vh,700px)]"
             >
-              <Photo
-                shot={category.shot}
-                src={category.src}
-                // Portrait sources (2:3) cover tall desktop panels. Request
-                // enough pixels for their rendered height as well as width,
-                // including the small hover zoom, to avoid upscaling a thumbnail.
-                sizes="(min-width: 1024px) max(21vw, min(50vh, 484px)), (min-width: 640px) 46vw, 75vw"
-                alt={`${category.name} category — Marrow streetwear`}
-                className="photo-zoom absolute inset-0 h-full w-full"
-              />
+              <div data-category-image className="absolute inset-0">
+                <Photo
+                  shot={category.shot}
+                  src={category.src}
+                  // Portrait sources (2:3) cover tall desktop panels. Request
+                  // enough pixels for their rendered height as well as width,
+                  // including the small hover zoom, to avoid upscaling a thumbnail.
+                  sizes="(min-width: 1024px) max(21vw, min(50vh, 484px)), (min-width: 640px) 46vw, 75vw"
+                  alt={`${category.name} category — Marrow streetwear`}
+                  className="photo-zoom absolute inset-0 h-full w-full"
+                />
+              </div>
 
               <div
                 aria-hidden="true"
