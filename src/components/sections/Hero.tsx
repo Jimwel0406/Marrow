@@ -73,9 +73,9 @@ export function Hero() {
             </span>
           </h1>
 
-          <div className="flex w-full flex-col items-start gap-6 min-[480px]:w-[308px]">
+          <div className="flex w-full flex-col items-start gap-6 min-[480px]:w-[308px] min-[992px]:w-full">
             <p
-              className="max-w-[19rem] text-[1.125rem] font-medium leading-[1.45] tracking-[-0.02em] text-ivory min-[480px]:text-[1.4rem] min-[768px]:text-[1.27rem]"
+              className="max-w-[19rem] text-[1.125rem] font-medium leading-[1.45] tracking-[-0.02em] text-ivory min-[480px]:text-[1.4rem] min-[768px]:text-[1.27rem] min-[992px]:max-w-none min-[992px]:whitespace-nowrap"
               data-reveal="rise"
               style={{ "--d": "340ms" } as CSSProperties}
             >
